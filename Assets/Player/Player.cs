@@ -5,6 +5,9 @@ using UnityEngine.Serialization;
 using UnityEngine.UI;
 using TouchPhase = UnityEngine.TouchPhase;
 
+[RequireComponent(typeof(Rigidbody))]
+[RequireComponent(typeof(AudioSource))]
+[RequireComponent(typeof(PlayerInput))]
 public class Player : MonoBehaviour
 {
     public Camera mainCamera;
@@ -17,8 +20,11 @@ public class Player : MonoBehaviour
     [Header("Character")] 
     public Transform character;
     public Animator animator;
+    [Header("Audio")] 
+    public AudioClip footstep;
 
     private Rigidbody _rigidbody;
+    private AudioSource _audioSource;
 
     private Vector3 _move;
     private PlayerInput _input;
@@ -31,7 +37,10 @@ public class Player : MonoBehaviour
     void Start()
     {
         _rigidbody = GetComponent<Rigidbody>();
+        _audioSource = GetComponent<AudioSource>();
         _input = GetComponent<PlayerInput>();
+
+        _audioSource.clip = footstep;
     }
 
     // Update is called once per frame
@@ -43,10 +52,12 @@ public class Player : MonoBehaviour
         {
             animator.SetBool(IsWalking, true);
             character.rotation = Quaternion.LookRotation(_move);
+            if (!_audioSource.isPlaying) _audioSource.Play();
         }
         else
         {
             animator.SetBool(IsWalking, false);
+            _audioSource.Stop();
         }
 
         if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began)
