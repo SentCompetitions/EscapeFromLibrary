@@ -7,13 +7,16 @@ using TouchPhase = UnityEngine.TouchPhase;
 
 public class Player : MonoBehaviour
 {
-    [FormerlySerializedAs("camera")] public Camera mainCamera;
+    public Camera mainCamera;
     [Space]
     public GameObject ui;
     public GameObject uiInput;
     public Button uiButton;
     public GameObject interactIcon;
     public Image panel;
+    [Header("Character")] 
+    public Transform character;
+    public Animator animator;
 
     private Rigidbody _rigidbody;
 
@@ -22,6 +25,8 @@ public class Player : MonoBehaviour
 
     private Interactable _interactable;
     private GameObject _icon;
+    
+    private static readonly int IsWalking = Animator.StringToHash("IsWalking");
 
     void Start()
     {
@@ -33,6 +38,16 @@ public class Player : MonoBehaviour
     void Update()
     {
         _rigidbody.MovePosition(transform.position + _move);
+
+        if (_move != Vector3.zero)
+        {
+            animator.SetBool(IsWalking, true);
+            character.rotation = Quaternion.LookRotation(_move);
+        }
+        else
+        {
+            animator.SetBool(IsWalking, false);
+        }
 
         if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began)
             _input.SwitchCurrentControlScheme("Touch");
