@@ -13,6 +13,7 @@ public class Player : MonoBehaviour
     public GameObject uiInput;
     public Button uiButton;
     public GameObject interactIcon;
+    public Image panel;
 
     private Rigidbody _rigidbody;
 
@@ -51,11 +52,10 @@ public class Player : MonoBehaviour
         if (!_interactable) return;
         if (!context.performed) return;
 
-        _interactable.OnInteract();
+        _interactable.OnInteract(gameObject);
         
         Debug.Log("Interact with " + _interactable.name);
-        DestroyIcon();
-        _interactable = null;
+        UnInteract();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -66,6 +66,7 @@ public class Player : MonoBehaviour
         uiButton.interactable = true;
 
         _icon = Instantiate(interactIcon, Vector3.zero, Quaternion.identity, ui.transform);
+        _icon.transform.SetSiblingIndex(0);
         _icon.GetComponent<InteractIcon>().targetCamera = mainCamera;
         _icon.GetComponent<InteractIcon>().target = other.transform;
     }
@@ -78,15 +79,20 @@ public class Player : MonoBehaviour
         _icon = null;
     }
 
-    private void OnTriggerExit(Collider other)
+    private void UnInteract()
     {
-        if (!_interactable) return;
-        if (other.gameObject != _interactable.gameObject) return;
-        
         _interactable = null;
         
         uiButton.interactable = false;
 
         DestroyIcon();
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (!_interactable) return;
+        if (other.gameObject != _interactable.gameObject) return;
+
+        UnInteract();
     }
 }
