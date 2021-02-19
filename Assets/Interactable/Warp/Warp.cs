@@ -21,6 +21,8 @@ public class Warp : Interactable
         player.GetComponent<Rigidbody>().detectCollisions = false;
         
         Player playerScript = player.GetComponent<Player>();
+        
+        playerScript.panel.gameObject.SetActive(true);
 
         float distance = Vector3.Distance(player.position, transform.position);
         float percent = 0;
@@ -55,6 +57,7 @@ public class Warp : Interactable
             yield return null;
         }
         playerScript.panel.color = new Color(0, 0, 0, 0);
+        playerScript.panel.gameObject.SetActive(false);
     }
     
     float Map(float s, float a1, float a2, float b1, float b2)
