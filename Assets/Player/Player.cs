@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.Layouts;
 using TouchPhase = UnityEngine.TouchPhase;
 
 public class Player : MonoBehaviour
@@ -21,7 +22,7 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        _rigidbody.MovePosition(transform.position + _move);;
+        _rigidbody.MovePosition(transform.position + _move);
 
         if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began)
             _input.SwitchCurrentControlScheme("Touch");

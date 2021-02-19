@@ -84,6 +84,17 @@
                     "path": "<Gamepad>/leftStick",
                     "interactions": "",
                     "processors": "InvertVector2(invertY=false)",
+                    "groups": "Gamepad",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "4161c15c-ffd0-4298-8d7f-c23362daa743",
+                    "path": "<Joystick>/stick",
+                    "interactions": "",
+                    "processors": "InvertVector2(invertY=false)",
                     "groups": "Touch",
                     "action": "Move",
                     "isComposite": false,
@@ -103,7 +114,18 @@
                 {
                     "name": "",
                     "id": "bfed4fb5-578b-412e-ad01-9caeb22e62c2",
-                    "path": "<Gamepad>/buttonEast",
+                    "path": "<Gamepad>/buttonSouth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "Interact",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "5acc0b40-b80a-484f-a191-9226a80440cd",
+                    "path": "<Joystick>/trigger",
                     "interactions": "",
                     "processors": "",
                     "groups": "Touch",
@@ -137,6 +159,17 @@
             "devices": [
                 {
                     "devicePath": "<Touchscreen>",
+                    "isOptional": false,
+                    "isOR": false
+                }
+            ]
+        },
+        {
+            "name": "Gamepad",
+            "bindingGroup": "Gamepad",
+            "devices": [
+                {
+                    "devicePath": "<Gamepad>",
                     "isOptional": false,
                     "isOR": false
                 }
