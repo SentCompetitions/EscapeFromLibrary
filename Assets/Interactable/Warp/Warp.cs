@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(AudioSource))]
 public class Warp : Interactable
 {
     [Header("Warp to")] 
@@ -11,7 +12,6 @@ public class Warp : Interactable
     [Range(0f, 10f)] public float delay = 0.5f;
     public override void OnInteract(GameObject player)
     {
-        
         StartCoroutine(WarpPlayer(player.transform));
     }
 
@@ -23,6 +23,8 @@ public class Warp : Interactable
         Player playerScript = player.GetComponent<Player>();
         
         playerScript.panel.gameObject.SetActive(true);
+        GetComponent<AudioSource>().Play();
+        MusicManager.Clip = null;
 
         float distance = Vector3.Distance(player.position, transform.position);
         float percent = 0;
