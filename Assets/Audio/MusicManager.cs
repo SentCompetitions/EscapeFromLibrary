@@ -23,6 +23,8 @@ public class MusicManager : MonoBehaviour
                 instance._source.Stop();
                 instance._source.clip = _clip;
                 instance._source.PlayDelayed(instance.musicDelay);
+
+                Debug.Log("[Music] Playing " + _clip.name);
             }
         }
     }

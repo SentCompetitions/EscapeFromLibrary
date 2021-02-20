@@ -4,13 +4,12 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Collider))]
-public class MusicZone : MonoBehaviour
+public class MusicZone : Zone
 {
     public AudioClip audioClip;
 
-    private void OnCollisionEnter(Collision other)
+    public override void OnZoneEnter(Collider other)
     {
-        if (!other.gameObject.CompareTag("Player")) return;
         MusicManager.Clip = audioClip;
     }
 }
