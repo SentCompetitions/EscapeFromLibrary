@@ -226,6 +226,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 54015000781948954, guid: 94ada8e8ce099e840b33fd0469d3010a, type: 3}
+      propertyPath: m_RootOrder
+      value: 27
+      objectReference: {fileID: 0}
+    - target: {fileID: 389764704686490232, guid: 94ada8e8ce099e840b33fd0469d3010a, type: 3}
+      propertyPath: m_RootOrder
+      value: 21
+      objectReference: {fileID: 0}
     - target: {fileID: 1755115536886863076, guid: 94ada8e8ce099e840b33fd0469d3010a, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -273,6 +281,30 @@ PrefabInstance:
     - target: {fileID: 1755115536886863077, guid: 94ada8e8ce099e840b33fd0469d3010a, type: 3}
       propertyPath: m_Name
       value: House
+      objectReference: {fileID: 0}
+    - target: {fileID: 1755115538230521300, guid: 94ada8e8ce099e840b33fd0469d3010a, type: 3}
+      propertyPath: m_RootOrder
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 2140626844647425048, guid: 94ada8e8ce099e840b33fd0469d3010a, type: 3}
+      propertyPath: m_RootOrder
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 2200308991936661615, guid: 94ada8e8ce099e840b33fd0469d3010a, type: 3}
+      propertyPath: m_RootOrder
+      value: 24
+      objectReference: {fileID: 0}
+    - target: {fileID: 6057465479207033199, guid: 94ada8e8ce099e840b33fd0469d3010a, type: 3}
+      propertyPath: m_RootOrder
+      value: 22
+      objectReference: {fileID: 0}
+    - target: {fileID: 6352848924497319431, guid: 94ada8e8ce099e840b33fd0469d3010a, type: 3}
+      propertyPath: m_RootOrder
+      value: 26
+      objectReference: {fileID: 0}
+    - target: {fileID: 7059721594947767285, guid: 94ada8e8ce099e840b33fd0469d3010a, type: 3}
+      propertyPath: m_RootOrder
+      value: 23
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 94ada8e8ce099e840b33fd0469d3010a, type: 3}
