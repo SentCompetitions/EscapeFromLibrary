@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.UI;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
 using TouchPhase = UnityEngine.TouchPhase;
@@ -15,6 +16,8 @@ public class Player : MonoBehaviour
     public GameObject ui;
     public GameObject uiInput;
     public Button uiButton;
+    public GameObject uiQuiz;
+    public GameObject interactionIconsParent;
     public GameObject interactIcon;
     public Image panel;
     [Header("Character")] 
@@ -22,15 +25,20 @@ public class Player : MonoBehaviour
     public Animator animator;
     [Header("Audio")] 
     public AudioClip footstep;
+    [Header("inputSystem")]
+    public InputSystemUIInputModule mainAction;
+    public InputSystemUIInputModule uiAction;
 
     private Rigidbody _rigidbody;
     private AudioSource _audioSource;
 
     private Vector3 _move;
-    private PlayerInput _input;
+    [HideInInspector] public PlayerInput input;
 
     private Interactable _interactable;
     private GameObject _icon;
+
+    [HideInInspector] public QuizLock quizLock;
     
     private static readonly int IsWalking = Animator.StringToHash("IsWalking");
 
@@ -38,7 +46,7 @@ public class Player : MonoBehaviour
     {
         _rigidbody = GetComponent<Rigidbody>();
         _audioSource = GetComponent<AudioSource>();
-        _input = GetComponent<PlayerInput>();
+        input = GetComponent<PlayerInput>();
 
         _audioSource.clip = footstep;
     }
@@ -61,10 +69,12 @@ public class Player : MonoBehaviour
         }
 
         if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began)
-            _input.SwitchCurrentControlScheme("Touch");
+            input.SwitchCurrentControlScheme("Touch");
 
-        if (_input.currentControlScheme != "Touch") uiInput.SetActive(false);
+#if !UNITY_EDITOR
+        if (input.currentControlScheme != "Touch") uiInput.SetActive(false);
         else uiInput.SetActive(true);
+#endif
     }
 
     public void Move(InputAction.CallbackContext context)
@@ -78,20 +88,25 @@ public class Player : MonoBehaviour
         if (!_interactable) return;
         if (!context.performed) return;
 
-        _interactable.OnInteract(gameObject);
+        _interactable.OnInteract(this);
         
-        Debug.Log("Interact with " + _interactable.name);
+        Debug.Log("[Interactable] Interact with " + _interactable.name);
         UnInteract();
     }
 
     private void OnTriggerEnter(Collider other)
     {
         if (_interactable) return;
+        ForceInteract(other.gameObject);
+    }
+
+    public void ForceInteract(GameObject other)
+    {
         if (!other.TryGetComponent(out _interactable)) return;
-        
+
         uiButton.interactable = true;
 
-        _icon = Instantiate(interactIcon, Vector3.zero, Quaternion.identity, ui.transform);
+        _icon = Instantiate(interactIcon, Vector3.zero, Quaternion.identity, interactionIconsParent.transform);
         _icon.transform.SetSiblingIndex(0);
         _icon.GetComponent<InteractIcon>().targetCamera = mainCamera;
         _icon.GetComponent<InteractIcon>().target = other.transform;
@@ -120,5 +135,17 @@ public class Player : MonoBehaviour
         if (other.gameObject != _interactable.gameObject) return;
 
         UnInteract();
+    }
+
+    public void OnUiClose(InputAction.CallbackContext context)
+    {
+        if (!context.performed) return;
+        OnUiClose();
+    }
+
+    public void OnUiClose()
+    {
+        Debug.Log("a");
+        if (quizLock) quizLock.Close(this);
     }
 }

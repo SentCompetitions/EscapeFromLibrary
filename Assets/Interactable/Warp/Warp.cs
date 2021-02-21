@@ -10,17 +10,19 @@ public class Warp : Interactable
     [Header("Warp settings")]
     [Range(0.1f, 5f)] public float outSpeed = 4f;
     [Range(0f, 10f)] public float delay = 0.5f;
-    public override void OnInteract(GameObject player)
+    public override void OnInteract(Player player)
     {
-        StartCoroutine(WarpPlayer(player.transform));
+        StartCoroutine(WarpPlayer(player));
     }
 
-    private IEnumerator WarpPlayer(Transform player)
+    private IEnumerator WarpPlayer(Player playerScript)
     {
-        player.GetComponent<Rigidbody>().isKinematic = true;
-        player.GetComponent<Rigidbody>().detectCollisions = false;
-        
-        Player playerScript = player.GetComponent<Player>();
+        Debug.Log("[Warp] Warping to " + target.position);
+
+        playerScript.GetComponent<Rigidbody>().isKinematic = true;
+        playerScript.GetComponent<Rigidbody>().detectCollisions = false;
+
+        Transform player = playerScript.transform;
         
         playerScript.panel.gameObject.SetActive(true);
         GetComponent<AudioSource>().Play();

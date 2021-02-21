@@ -3,5 +3,5 @@ using UnityEngine;
 
 public class Interactable : MonoBehaviour
 {
-    public virtual void OnInteract(GameObject player) {}
+    public virtual void OnInteract(Player player) {}
 }
